@@ -129,43 +129,43 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: afd2a0249e5e9ec47a9528a01942cf94, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.3061596
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: afd2a0249e5e9ec47a9528a01942cf94, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.3061596
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: afd2a0249e5e9ec47a9528a01942cf94, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.3061596
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: afd2a0249e5e9ec47a9528a01942cf94, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.27
+      value: 1.05
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: afd2a0249e5e9ec47a9528a01942cf94, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.11
+      value: -2.07
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: afd2a0249e5e9ec47a9528a01942cf94, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.82
+      value: 2.45
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: afd2a0249e5e9ec47a9528a01942cf94, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.05479238
+      value: 0.05571476
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: afd2a0249e5e9ec47a9528a01942cf94, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.9126805
+      value: 0.9099421
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: afd2a0249e5e9ec47a9528a01942cf94, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.1304309
+      value: -0.13003968
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: afd2a0249e5e9ec47a9528a01942cf94, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.3834057
+      value: -0.38986015
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: afd2a0249e5e9ec47a9528a01942cf94, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -173,12 +173,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: afd2a0249e5e9ec47a9528a01942cf94, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 45.572998
+      value: 46.384995
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: afd2a0249e5e9ec47a9528a01942cf94, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 16.266006
       objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: afd2a0249e5e9ec47a9528a01942cf94, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -5722608556012524594, guid: afd2a0249e5e9ec47a9528a01942cf94, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 49bc554f6ba9b294e870961d8919083e, type: 2}
     - target: {fileID: -4683669308469848369, guid: afd2a0249e5e9ec47a9528a01942cf94, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -187,6 +195,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shovel
       objectReference: {fileID: 0}
+    - target: {fileID: 2562279744116189284, guid: afd2a0249e5e9ec47a9528a01942cf94, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 49bc554f6ba9b294e870961d8919083e, type: 2}
+    - target: {fileID: 8032750206264916975, guid: afd2a0249e5e9ec47a9528a01942cf94, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 49bc554f6ba9b294e870961d8919083e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
