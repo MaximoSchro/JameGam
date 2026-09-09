@@ -34,7 +34,7 @@ public class EnemyMovement : MonoBehaviour
         if (t >= 1) Destroy(gameObject); //do whatever losing thing is supposed to happen when they get to the end
     }
 
-    void Stun(float time)
+    internal void Stun(float time)
     {
         StartCoroutine("ApplyStun", time);
     }
@@ -46,18 +46,18 @@ public class EnemyMovement : MonoBehaviour
         _isStunned = false;
     }
 
-    void AddSlowStacks(int amount = 1)
+    internal void AddSlowStacks(int amount = 1)
     {
         _slowStacks += amount;
     }
     
-    void RemoveSlowStacks(int amount = 1)
+    internal void RemoveSlowStacks(int amount = 1)
     {
         _slowStacks -= amount;
         _slowStacks = _slowStacks < 0 ? 0 : _slowStacks;
     }
     
-    void ClearSlowStacks()
+    internal void ClearSlowStacks()
     {
         _slowStacks = 0;
     }
