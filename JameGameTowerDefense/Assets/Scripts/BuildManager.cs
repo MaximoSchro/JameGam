@@ -75,7 +75,6 @@ public class BuildManager : MonoBehaviour
     private void ScrollChangedHotbar(float delta)
     {
         if (!InBuildMode) return;
-        Debug.Log(delta);
         if (delta > 0)
         {
             currentTowerIndex++;
@@ -118,7 +117,12 @@ public class BuildManager : MonoBehaviour
     private void PlaceBuild()
     {
         if (!InBuildMode) return;
-        Instantiate(Towers[currentTowerIndex], RaycastToFloor(), Quaternion.identity);
+        GameObject temp = Towers[currentTowerIndex];
+        if(temp.TryGetComponent<TempTower>(out TempTower tower))
+        {
+            if(GameManager.Instance.PurchaseItem(tower.Cost)) 
+                Instantiate(temp, RaycastToFloor(), Quaternion.identity);
+        }
     }
 
     private void Update()
