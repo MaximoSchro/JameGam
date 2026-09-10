@@ -63,6 +63,7 @@ public class BuildManager : MonoBehaviour
         OutlineObject.SetActive(InBuildMode);
         OutlineObject.transform.position = RaycastToFloor();
         UpdateHotbar(currentTowerIndex + 1);
+        PlayerController.SetSwingAction?.Invoke(!InBuildMode);
     }
     private void KeyChangedHotbar(string key)
     {

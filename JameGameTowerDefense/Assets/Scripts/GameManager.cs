@@ -27,7 +27,8 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        if(Instance == null)
+        Time.timeScale = 1;
+        if (Instance == null)
         {
             Instance = this;
         }
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
     {
         PauseAction.Disable();
         AddCurrency.Disable();
+        Time.timeScale = 1;
     }
     private void Start()
     {
