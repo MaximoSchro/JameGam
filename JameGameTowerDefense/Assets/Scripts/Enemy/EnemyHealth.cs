@@ -31,4 +31,8 @@ public class EnemyHealth : MonoBehaviour
         //change this bullshit :P
         Destroy(gameObject);
     }
+    public void TimedDeath(int time)
+    {
+        Destroy(gameObject,time);
+    }
 }

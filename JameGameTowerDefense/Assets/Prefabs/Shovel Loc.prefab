@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 349090351348094606}
   - component: {fileID: 3001716940866308300}
+  - component: {fileID: 1630689050951251918}
   m_Layer: 0
   m_Name: Shovel Loc
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   m_Children:
   - {fileID: 9205943080278839370}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -164.884, y: 25.320007, z: 35.229004}
+  m_LocalEulerAnglesHint: {x: -168.746, y: 27.156998, z: 27.195007}
 --- !u!95 &3001716940866308300
 Animator:
   serializedVersion: 7
@@ -55,6 +56,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1630689050951251918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5308144147132343004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd3918fd190239d409c27db1043f2346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShovelEventHandler
 --- !u!1001 &8667367739939174305
 PrefabInstance:
   m_ObjectHideFlags: 0

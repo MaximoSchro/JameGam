@@ -160,6 +160,10 @@ public class PlayerController : MonoBehaviour
         }
         ShovelObject.transform.localPosition = originalPosition;
         ShovelAnimator.SetTrigger("DoSwing");
+        if(shovelChargeState == 3)
+        {
+            ShovelHead.TriggeredThirdCharge?.Invoke();
+        }
         chargeCoroutine = null;
     }
     public bool CheckAnimationName(string name)
