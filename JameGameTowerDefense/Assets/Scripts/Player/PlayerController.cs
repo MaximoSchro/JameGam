@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator ShovelAnimator;
     [SerializeField] private float ChargeTime;
     [SerializeField] private float ChargeMagnitude;
+    [SerializeField] private float StunTime;
 
     private CharacterController controller;
 
@@ -172,4 +173,5 @@ public class PlayerController : MonoBehaviour
         return false;
     }
     public int GetChargeState() { return shovelChargeState; }
+    public float GetStunTime() { return StunTime; }
 }

@@ -16,7 +16,10 @@ public class ShovelHead : MonoBehaviour
         switch (currentCharge)
         {
             case 1:
-                //do stun
+                if(other.TryGetComponent<EnemyMovement>(out EnemyMovement em))
+                {
+                    em.Stun(playerController.GetStunTime());
+                }
                 break;
             case 2:
                     rb = other.GetComponent<Rigidbody>();
@@ -33,10 +36,5 @@ public class ShovelHead : MonoBehaviour
                 break;
         }
         
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireCube(this.transform.position + Camera.main.transform.forward * 2 +Vector3.up*2, Vector3.one * boxHalfWidth);
     }
 }
