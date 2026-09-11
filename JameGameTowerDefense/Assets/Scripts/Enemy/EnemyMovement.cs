@@ -19,8 +19,7 @@ public class EnemyMovement : MonoBehaviour
     
     void Start()
     {
-        //will change this to a singleton spline if i care later
-        _spline = GameObject.Find("Spline").GetComponent<SplineContainer>();
+        _spline = EnemyPath.Instance.sc;
         _dist = 0;
     }
 
