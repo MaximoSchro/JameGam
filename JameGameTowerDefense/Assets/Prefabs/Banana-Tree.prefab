@@ -137,15 +137,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 27873da821d1a78479e4f87d338d0ccb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.0206745
+      value: 1.40745
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 27873da821d1a78479e4f87d338d0ccb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.12000012
+      value: -0.12
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 27873da821d1a78479e4f87d338d0ccb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.77653
+      value: -3.13563
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 27873da821d1a78479e4f87d338d0ccb, type: 3}
       propertyPath: m_LocalRotation.w
@@ -179,6 +179,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Banana-Tree
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 27873da821d1a78479e4f87d338d0ccb, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -189,6 +193,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 27873da821d1a78479e4f87d338d0ccb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5918407766692199214}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 27873da821d1a78479e4f87d338d0ccb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1594271740875135495}
   m_SourcePrefab: {fileID: 100100000, guid: 27873da821d1a78479e4f87d338d0ccb, type: 3}
 --- !u!1 &8402091231110917341 stripped
 GameObject:
@@ -207,12 +214,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d7b79ef59e359ccab70ac0a58865e24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BananaTree
-  Cost: 10
+  Cost: 40
   Level: 0
   MaxLevel: 3
   spawnRate: 10
   upgradeAmount: 2
   BananaPrefab: {fileID: 5691515680485507893, guid: f824a7dd8c3b10c3496ddaf9be88de67, type: 3}
+--- !u!65 &1594271740875135495
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8402091231110917341}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 3.76, z: 1.28}
+  m_Center: {x: 0, y: 1.5, z: 0.1}
 --- !u!4 &9210399835368863335 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 27873da821d1a78479e4f87d338d0ccb, type: 3}

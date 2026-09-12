@@ -1,20 +1,30 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public static bool InWave = false;
     public InputAction PauseAction;
     public InputAction AddCurrency;
+    public InputAction StartWaveAction;
  
     [SerializeField] private TMP_Text currencyTracker;
     [SerializeField] private GameObject PauseMenu;
 
+    [SerializeField] private int StartingCurrency;
+
+    [SerializeField] private WaveData[] Waves;
+    private int waveIndex = 0;
+
     private bool gamePaused = false;
 
     private int currency;
+    private List<GameObject> enemyList = new List<GameObject>();
     public int Currency
     {
         get { return currency; }
@@ -51,8 +61,15 @@ public class GameManager : MonoBehaviour
 
         PauseAction.performed += context => PauseUnpause();
         AddCurrency.performed += context => UpdateCurrency(10);
-        SetCurrency(0);
+        SetCurrency(StartingCurrency);
         PauseMenu.SetActive(false);
+    }
+    private void Update()
+    {
+        if(InWave && enemyList.Count <= 0)
+        {
+            InWave = false;
+        }
     }
     public void PauseUnpause()
     {
@@ -78,7 +95,24 @@ public class GameManager : MonoBehaviour
         }
         return false;
     }
-
+    public void StartWave()
+    {
+        if (InWave) return;
+        InWave = true;
+        StartCoroutine(HandleWave(Waves[waveIndex]));
+        waveIndex++;
+    }
+    private IEnumerator HandleWave(WaveData wave)
+    {
+        int index = 0;
+        while(index < wave.EnemiesToSpawn.Length)
+        {
+            GameObject temp = Instantiate(wave.EnemiesToSpawn[index]);
+            enemyList.Add(temp);
+            index++;
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
     public void QuitGame()
     {
         Application.Quit();

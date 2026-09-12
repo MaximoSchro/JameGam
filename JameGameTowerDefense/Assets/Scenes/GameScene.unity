@@ -581,6 +581,7 @@ MonoBehaviour:
     m_Priority: 0
   currencyTracker: {fileID: 1264464490}
   PauseMenu: {fileID: 1075532112}
+  StartingCurrency: 100
 --- !u!1 &133334712
 GameObject:
   m_ObjectHideFlags: 0
@@ -4599,9 +4600,15 @@ MonoBehaviour:
   TowerOutlines:
   - {fileID: 771377585968862229, guid: fb81fb61b6c9b60419d05312c66493ab, type: 3}
   - {fileID: 771377585968862229, guid: 47fdff93b7a369f47b74851df6af1bac, type: 3}
+  - {fileID: 771377585968862229, guid: 47fdff93b7a369f47b74851df6af1bac, type: 3}
+  - {fileID: 4468890478138773823, guid: c3d7a6438a6155f479ee843dd89e2213, type: 3}
   Towers:
   - {fileID: 771377585968862229, guid: f88f0bce2a1dfa4479cef2d790dcf894, type: 3}
   - {fileID: 771377585968862229, guid: a36af5a8cc8967649a58e9cf80287eb2, type: 3}
+  - {fileID: 771377585968862229, guid: a36af5a8cc8967649a58e9cf80287eb2, type: 3}
+  - {fileID: 8402091231110917341, guid: 9d1b1974995109a0096e9756d804fc14, type: 3}
+  CanAffordMaterial: {fileID: 2100000, guid: cbe7a050a346f13479ab99af44871c16, type: 2}
+  CannotAffortMaterial: {fileID: 2100000, guid: 6d93171d5f2d4c04e921613d99d49f98, type: 2}
 --- !u!1001 &1906647154
 PrefabInstance:
   m_ObjectHideFlags: 0

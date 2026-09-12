@@ -14,12 +14,29 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private GameObject BuildUI;
     [SerializeField] private GameObject[] TowerOutlines;
     [SerializeField] private GameObject[] Towers;
+    [SerializeField] private Material CanAffordMaterial;
+    [SerializeField] private Material CannotAffortMaterial;
 
     private GameObject mainCamera;
     private GameObject OutlineObject;
     private int floorMask;
+    private int towerMask;
+    private LayerMask combinedMask;
+    private Vector3 noCast = Vector3.one * 10000f;
 
     private Animator currentHotbar;
+
+    private GameObject currentlyLookedAtTower;
+    private GameObject CurrentLookedAtTower
+    {
+        get {  return currentlyLookedAtTower; }
+        set
+        {
+            if(currentlyLookedAtTower != null)
+             currentlyLookedAtTower.GetComponent<TowerBase>().ResetMaterial();
+            currentlyLookedAtTower = value;
+        }
+    }
 
     private void OnEnable()
     {
@@ -44,6 +61,8 @@ public class BuildManager : MonoBehaviour
 
         mainCamera = Camera.main.gameObject;
         floorMask = LayerMask.GetMask("Floor");
+        towerMask = LayerMask.GetMask("Tower");
+        combinedMask = LayerMask.GetMask("Tower", "Floor");
 
         SetOutlineObject(currentTowerIndex);
         InBuildMode = false;
@@ -54,7 +73,10 @@ public class BuildManager : MonoBehaviour
     private void SetOutlineObject(int target)
     {
         if (OutlineObject != null) Destroy(OutlineObject);
-        OutlineObject = Instantiate(TowerOutlines[target]);
+        OutlineObject = Instantiate(TowerOutlines[target], RaycastToFloor(), Quaternion.identity);
+        Quaternion rotation = new Quaternion(OutlineObject.transform.rotation.x, mainCamera.transform.rotation.y,
+                    OutlineObject.transform.rotation.z, OutlineObject.transform.rotation.w);
+        OutlineObject.transform.rotation = rotation;
     }
     private void SwitchBuildMode()
     {
@@ -118,39 +140,104 @@ public class BuildManager : MonoBehaviour
     private void PlaceBuild()
     {
         if (!InBuildMode) return;
-        GameObject temp = Towers[currentTowerIndex];
-        if(temp.TryGetComponent<TowerBase>(out TowerBase tower))
+        if(CurrentLookedAtTower != null)
         {
-            if(GameManager.Instance.PurchaseItem(tower.Cost)) 
-                Instantiate(temp, RaycastToFloor(), Quaternion.identity);
+            CurrentLookedAtTower.GetComponent<TowerBase>().Upgrade();
         }
+        else
+        {
+            GameObject temp = Towers[currentTowerIndex];
+            if (temp.TryGetComponent<TowerBase>(out TowerBase tower))
+            {
+                if (GameManager.Instance.PurchaseItem(tower.Cost))
+                {
+                    Quaternion rotation = new Quaternion(temp.transform.rotation.x, mainCamera.transform.rotation.y,
+                        temp.transform.rotation.z, temp.transform.rotation.w);
+                    GameObject building = Instantiate(temp, RaycastToFloor(), rotation);
+                    building.GetComponent<TowerBase>().Initialize();
+                }
+            }
+        }
+        
     }
-
-    private void Update()
+    private void FixedUpdate()
     {
         if (!InBuildMode) return;
-        OutlineObject.transform.position = RaycastToFloor();
-        
+        if (InBuildMode && GameManager.InWave)
+        {
+            SwitchBuildMode();
+            return;
+        }
+        GameObject obj;
+        if (CheckCastToFloor())
+        {
+            OutlineObject.SetActive(true);
+            CurrentLookedAtTower = null;
+            Vector3 pos = RaycastToFloor();
+            OutlineObject.transform.position = pos;
+            OutlineObject.transform.rotation = new Quaternion(OutlineObject.transform.rotation.x, mainCamera.transform.rotation.y,
+                        OutlineObject.transform.rotation.z, OutlineObject.transform.rotation.w);
+            MeshRenderer[] mrs = OutlineObject.GetComponentsInChildren<MeshRenderer>();
+            if (Towers[currentTowerIndex].GetComponent<TowerBase>().Cost <= GameManager.Instance.Currency)
+            {
+               foreach (MeshRenderer mr in mrs)
+               {
+                    mr.sharedMaterial = CanAffordMaterial;
+               }
+            }
+            else
+            {
+                foreach (MeshRenderer mr in mrs)
+                {
+                    mr.sharedMaterial = CannotAffortMaterial;
+                }
+            }
+        }
+        else if(RaycastToTower(out obj))
+        {
+            OutlineObject.SetActive(false);
+            if (obj != CurrentLookedAtTower)
+            {
+                CurrentLookedAtTower = obj;
+            }
+            TowerBase tower = currentlyLookedAtTower.GetComponent<TowerBase>();
+            if(tower.Cost <= GameManager.Instance.Currency)
+            {
+                tower.SetMaterial(CanAffordMaterial);
+            }
+            else
+            {
+                tower.SetMaterial(CannotAffortMaterial);
+            }
+        }
+
     }
     private Vector3 RaycastToFloor()
     {
-        mainCamera = Camera.main.gameObject;
         if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.TransformDirection(Vector3.forward), out RaycastHit hit, 1000f, floorMask))
         {
             return hit.point;
         }
-
-#if UNITY_EDITOR
-        if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.TransformDirection(Vector3.forward), out hit, 1000f, floorMask))
+        return noCast;
+    }
+    private bool RaycastToTower(out GameObject tower)
+    {
+        tower = null;
+        if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.TransformDirection(Vector3.forward), out RaycastHit hit, 1000f, towerMask))
         {
-            Debug.DrawLine(mainCamera.transform.position, hit.point, Color.red);
+            tower = hit.transform.gameObject;
+            return true;
         }
-        else
+        return false;
+    }
+    private bool CheckCastToFloor()
+    {
+        if(Physics.Raycast(mainCamera.transform.position, mainCamera.transform.TransformDirection(Vector3.forward), out RaycastHit hit, 1000f, combinedMask))
         {
-            Vector3 endPoint = mainCamera.transform.position + (mainCamera.transform.TransformDirection(Vector3.forward) * 10000);
-            Debug.DrawLine(mainCamera.transform.position, hit.point, Color.red);
+            if(hit.transform.gameObject.layer == 6)
+                return true;
+            else return false;
         }
-#endif
-        return Vector3.one * 10000f;
+        return false;
     }
 }
