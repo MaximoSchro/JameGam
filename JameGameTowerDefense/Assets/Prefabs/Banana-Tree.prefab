@@ -219,28 +219,7 @@ MonoBehaviour:
   MaxLevel: 3
   spawnRate: 10
   upgradeAmount: 2
-  BananaPrefab: {fileID: 5691515680485507893, guid: f824a7dd8c3b10c3496ddaf9be88de67, type: 3}
---- !u!65 &1594271740875135495
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8402091231110917341}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 3.76, z: 1.28}
-  m_Center: {x: 0, y: 1.5, z: 0.1}
+  BananaPrefab: {fileID: 4234619793278379185, guid: 41d866bff80b529528af1c7aa99891ac, type: 3}
 --- !u!4 &9210399835368863335 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 27873da821d1a78479e4f87d338d0ccb, type: 3}
