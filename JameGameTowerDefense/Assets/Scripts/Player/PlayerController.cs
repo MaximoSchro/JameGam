@@ -9,10 +9,13 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public static Action<bool> SetSwingAction;
+    public static Action<int> UpgradeSwingTier;
+    public static Action<float> IncreaseStunTime;
 
     public InputAction MovementAction;
     public InputAction JumpAction;
     public InputAction SwingAction;
+    public InputAction InteractAction;
 
     public bool CanChargeTierTwo;
     public bool CanChargeTierThree;
@@ -26,6 +29,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float ChargeTime;
     [SerializeField] private float ChargeMagnitude;
     [SerializeField] private float StunTime;
+
+    [SerializeField] private GameObject InteractText;
+    [SerializeField] private GameObject ShopCamera;
 
     private CharacterController controller;
 
@@ -42,34 +48,68 @@ public class PlayerController : MonoBehaviour
     private bool holdingCharge;
     private Coroutine chargeCoroutine;
 
+    private int interactableLayer;
+    private GameObject mainCamera;
+    private GameObject currentRaycastTarget;
+
+
     private void OnEnable()
     {
         MovementAction.Enable();
         JumpAction.Enable();
         SwingAction.Enable();
+        InteractAction.Enable();
 
         SetSwingAction += SetSwing;
+        UpgradeSwingTier += SwingUpgrade;
+        IncreaseStunTime += StunIncrease;
     }
     private void OnDisable()
     {
         MovementAction.Disable();
         JumpAction.Disable();
         SwingAction.Disable();
+        InteractAction.Disable();
 
         SetSwingAction -= SetSwing;
+        UpgradeSwingTier -= SwingUpgrade;
+        IncreaseStunTime -= StunIncrease;
     }
     private void Start()
     {
         MovementAction.performed += context => OnMove(context.ReadValue<Vector2>().normalized);
         MovementAction.canceled += context => OnMove(context.ReadValue<Vector2>().normalized);
         JumpAction.performed += context => OnJump(context.ReadValue<float>());
+        InteractAction.performed += context => HandleInteraction();
 
         SwingAction.performed += context => StartSwing();
         SwingAction.canceled += context => EndSwing();
 
         controller = GetComponent<CharacterController>();
+        interactableLayer = LayerMask.GetMask("Interactable");
+        mainCamera = Camera.main.gameObject;
     }
-    
+    private void Update()
+    {
+        if (!ShopCamera.activeInHierarchy)
+        {
+            if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out RaycastHit hit, 5f, interactableLayer))
+            {
+                currentRaycastTarget = hit.transform.gameObject;
+                InteractText.SetActive(true);
+            }
+            else
+            {
+                currentRaycastTarget = null;
+                InteractText.SetActive(false);
+            }
+        }
+        else
+        {
+            currentRaycastTarget = null;
+            InteractText.SetActive(false);
+        }
+    }
     private void FixedUpdate()
     {
         HorizontalVelocity();
@@ -123,7 +163,7 @@ public class PlayerController : MonoBehaviour
     }
     private void StartSwing()
     {
-        if (chargeCoroutine != null) return;
+        if (chargeCoroutine != null || ShopCamera.activeInHierarchy) return;
         ShovelAnimator.SetTrigger("StartSwing");
         holdingCharge = true;
         chargeCoroutine = StartCoroutine(Charging());
@@ -175,6 +215,30 @@ public class PlayerController : MonoBehaviour
             return currentClip.name == name;
         }
         return false;
+    }
+    private void HandleInteraction()
+    {
+        if (currentRaycastTarget == null) return;
+        if(currentRaycastTarget.TryGetComponent<ShopInteractable>(out ShopInteractable shop))
+        {
+            shop.StartShop();
+        }
+    }
+    private void SwingUpgrade(int unlockedTier)
+    {
+        switch (unlockedTier)
+        {
+            case 2:
+                CanChargeTierTwo = true;
+                break;
+            case 3:
+                CanChargeTierThree = true;
+                break;
+        }
+    }
+    private void StunIncrease(float amountToIncrease)
+    {
+        StunTime += amountToIncrease;
     }
     public int GetChargeState() { return shovelChargeState; }
     public float GetStunTime() { return StunTime; }
