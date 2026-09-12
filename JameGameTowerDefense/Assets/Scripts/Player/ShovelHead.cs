@@ -73,6 +73,7 @@ public class ShovelHead : MonoBehaviour
             }
             if (rb.TryGetComponent<EnemyMovement>(out EnemyMovement movement))
             {
+                rb.freezeRotation = false;
                 Destroy(movement);
             }
         }

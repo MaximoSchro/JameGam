@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Splines;
 
 public class EnemyMovement : MonoBehaviour
