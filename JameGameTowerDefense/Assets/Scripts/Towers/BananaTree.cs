@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BananaTree : TowerBase
 {
-    [SerializeField] float spawnRate = 10f;
+    [SerializeField] float spawnTime = 10f;
     [SerializeField] float upgradeAmount = 2f;
     
     [SerializeField] Transform BananaPrefab;
@@ -13,7 +13,7 @@ public class BananaTree : TowerBase
     {
         _time += Time.deltaTime;
         
-        if (_time > (spawnRate - upgradeAmount * Level))
+        if (_time > (spawnTime - upgradeAmount * Level))
         {
             SpawnBanana();
         }

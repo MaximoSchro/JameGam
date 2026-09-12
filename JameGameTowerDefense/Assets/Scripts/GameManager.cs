@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     private bool gamePaused = false;
 
     private int currency;
-    private List<GameObject> enemyList = new List<GameObject>();
+    internal List<GameObject> enemyList = new List<GameObject>();
     public int Currency
     {
         get { return currency; }

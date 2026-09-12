@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4453242845299065092}
   m_Layer: 0
   m_Name: model
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 5370571175634508917}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -191,6 +191,8 @@ MonoBehaviour:
   speed: 3
   slowPerStack: 0.1
   maxSlowDown: 0.3
+  moveSpeed: 2
+  moveAmplitude: 1
 --- !u!114 &5370571175634508917
 MonoBehaviour:
   m_ObjectHideFlags: 0
