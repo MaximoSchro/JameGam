@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int StartingCurrency;
 
     [SerializeField] private WaveData[] Waves;
+    [SerializeField] private GameObject TabToStartText;
     private int waveIndex = 0;
 
     private bool gamePaused = false;
@@ -48,11 +49,13 @@ public class GameManager : MonoBehaviour
         }
         PauseAction.Enable();
         AddCurrency.Enable();
+        StartWaveAction.Enable();
     }
     private void OnDisable()
     {
         PauseAction.Disable();
         AddCurrency.Disable();
+        StartWaveAction.Disable();
         Time.timeScale = 1;
     }
     private void Start()
@@ -61,6 +64,7 @@ public class GameManager : MonoBehaviour
 
         PauseAction.performed += context => PauseUnpause();
         AddCurrency.performed += context => UpdateCurrency(10);
+        StartWaveAction.performed += context => StartWave();
         SetCurrency(StartingCurrency);
         PauseMenu.SetActive(false);
     }
@@ -69,6 +73,7 @@ public class GameManager : MonoBehaviour
         if(InWave && enemyList.Count <= 0)
         {
             InWave = false;
+            TabToStartText.SetActive(true);
         }
     }
     public void PauseUnpause()
@@ -101,6 +106,7 @@ public class GameManager : MonoBehaviour
         InWave = true;
         StartCoroutine(HandleWave(Waves[waveIndex]));
         waveIndex++;
+        TabToStartText.SetActive(false);
     }
     private IEnumerator HandleWave(WaveData wave)
     {
@@ -110,7 +116,7 @@ public class GameManager : MonoBehaviour
             GameObject temp = Instantiate(wave.EnemiesToSpawn[index]);
             enemyList.Add(temp);
             index++;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1.5f);
         }
     }
     public void QuitGame()

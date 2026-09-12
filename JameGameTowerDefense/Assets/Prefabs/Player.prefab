@@ -190,6 +190,24 @@ MonoBehaviour:
       m_Flags: 0
     m_Flags: 0
     m_Priority: 0
+  InteractAction:
+    m_Name: Interact
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 04a56fb7-279c-4494-bb3a-8e4fb7b27a6e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 570668cd-c63f-4182-a880-3333599b5156
+      m_Path: <Keyboard>/e
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Interact
+      m_Flags: 0
+    m_Flags: 0
+    m_Priority: 0
   CanChargeTierTwo: 1
   CanChargeTierThree: 1
   speed: 10
@@ -199,6 +217,9 @@ MonoBehaviour:
   ShovelAnimator: {fileID: 0}
   ChargeTime: 2
   ChargeMagnitude: 0.02
+  StunTime: 2
+  InteractText: {fileID: 0}
+  ShopCamera: {fileID: 0}
 --- !u!23 &1344326032152760804
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -10,17 +10,22 @@ public class EnemyMovement : MonoBehaviour
     
     [SerializeField] float slowPerStack = 0.1f;
     [SerializeField] private float maxSlowDown = 0.3f;
+
+    [SerializeField] private float moveSpeed = 2;
+    [SerializeField] private float moveAmplitude = 1;
     
     private SplineContainer _spline;
     private float _dist;
     private bool _isStunned = false;
     
     private int _slowStacks = 0;
+    private float moveTime = 0;
     
     void Start()
     {
         _spline = EnemyPath.Instance.sc;
         _dist = 0;
+        moveTime += UnityEngine.Random.Range(0f, 2f);
     }
 
     void Update()
@@ -28,6 +33,11 @@ public class EnemyMovement : MonoBehaviour
         //clean up this line if it upsets anyone
         _dist += !_isStunned ? Time.deltaTime * speed * Mathf.Clamp((1f - slowPerStack * _slowStacks), maxSlowDown, 1f) : 0f;
         SplineFunctions.SplineEvaluate(_spline, _dist, out Vector3 pos, out float t);
+
+        if (!_isStunned)
+            moveTime += Time.deltaTime;
+        pos.y += Mathf.Abs(Mathf.Sin(moveTime * moveSpeed) * moveAmplitude);
+        
         transform.position = pos;
         if (t >= 1) Destroy(gameObject); //do whatever losing thing is supposed to happen when they get to the end
     }

@@ -88,6 +88,8 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
         interactableLayer = LayerMask.GetMask("Interactable");
         mainCamera = Camera.main.gameObject;
+        CanChargeTierTwo = false;
+        CanChargeTierThree = false;
     }
     private void Update()
     {
@@ -193,7 +195,7 @@ public class PlayerController : MonoBehaviour
                     timer = 0;
                 }
             }
-            Vector3 randomOffset = UnityEngine.Random.insideUnitSphere * ChargeMagnitude * shovelChargeState;
+            Vector3 randomOffset = UnityEngine.Random.insideUnitSphere * ChargeMagnitude * (shovelChargeState-1);
             ShovelObject.transform.localPosition = randomOffset;
 
             yield return null;
