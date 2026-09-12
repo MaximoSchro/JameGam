@@ -119,7 +119,7 @@ public class BuildManager : MonoBehaviour
     {
         if (!InBuildMode) return;
         GameObject temp = Towers[currentTowerIndex];
-        if(temp.TryGetComponent<TempTower>(out TempTower tower))
+        if(temp.TryGetComponent<TowerBase>(out TowerBase tower))
         {
             if(GameManager.Instance.PurchaseItem(tower.Cost)) 
                 Instantiate(temp, RaycastToFloor(), Quaternion.identity);
