@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
     private bool gamePaused = false;
 
     private int currency;
-    private List<GameObject> enemyList = new List<GameObject>();
     public int Currency
     {
         get { return currency; }
@@ -35,7 +34,8 @@ public class GameManager : MonoBehaviour
             currencyTracker.text = $"{currency}";
         }
     }
-
+    private List<GameObject> enemyList = new List<GameObject>();
+    private Coroutine slowTime;
     private void OnEnable()
     {
         Time.timeScale = 1;
@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
         {
             InWave = false;
             TabToStartText.SetActive(true);
+            MusicManager.StartPrep?.Invoke();
         }
     }
     public void PauseUnpause()
@@ -107,6 +108,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(HandleWave(Waves[waveIndex]));
         waveIndex++;
         TabToStartText.SetActive(false);
+        MusicManager.StartWave?.Invoke();
     }
     private IEnumerator HandleWave(WaveData wave)
     {
@@ -118,6 +120,38 @@ public class GameManager : MonoBehaviour
             index++;
             yield return new WaitForSeconds(1.5f);
         }
+    }
+    public void SlowDownOnHit(float time)
+    {
+        return;
+        //slowTime = StartCoroutine(Slow(time));
+    }
+    private IEnumerator Slow(float time)
+    {
+        float elapsedTime = 0f;
+        float newTime = time * 0.2f;
+        while (elapsedTime < newTime)
+        {
+            float t = elapsedTime / newTime;
+
+            Time.timeScale = Mathf.Lerp(1, 0.4f, t);
+
+            elapsedTime += Time.unscaledDeltaTime;
+            yield return null;
+        }
+        yield return new WaitForSecondsRealtime(time * 0.7f);
+        elapsedTime = 0f;
+        newTime = time * 0.1f;
+        while(elapsedTime < newTime)
+        {
+            float t = elapsedTime / newTime;
+
+            Time.timeScale = Mathf.Lerp(0.4f, 1, t);
+
+            elapsedTime += Time.unscaledDeltaTime;
+            yield return null;
+        }
+        slowTime = null;
     }
     public void QuitGame()
     {

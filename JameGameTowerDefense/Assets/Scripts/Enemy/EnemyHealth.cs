@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    [SerializeField]  private int maxHealth;
+    [SerializeField] private int maxHealth;
+    [SerializeField] private int killReward;
     private int _currentHealth;
 
     private void Start()

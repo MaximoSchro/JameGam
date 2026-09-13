@@ -49,6 +49,7 @@ public class ShovelHead : MonoBehaviour
                 {
                     Destroy(movement);
                 }
+                GameManager.Instance.SlowDownOnHit(1f);
                 break;
         }
     }
@@ -76,6 +77,7 @@ public class ShovelHead : MonoBehaviour
                 rb.freezeRotation = false;
                 Destroy(movement);
             }
+            GameManager.Instance.SlowDownOnHit(1.5f);
         }
         waitingForThird = false;
     }

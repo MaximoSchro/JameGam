@@ -25,19 +25,25 @@ public class EnemyMovement : MonoBehaviour
         _dist = 0;
         moveTime += UnityEngine.Random.Range(0f, 2f);
     }
-
+    private void OnDisable()
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = false;
+    }
     void Update()
     {
         //clean up this line if it upsets anyone
         _dist += !_isStunned ? Time.deltaTime * speed * Mathf.Clamp((1f - slowPerStack * _slowStacks), maxSlowDown, 1f) : 0f;
         SplineFunctions.SplineEvaluate(_spline, _dist, out Vector3 pos, out float t);
-
+        
         if (!_isStunned)
             moveTime += Time.deltaTime;
         pos.y += Mathf.Abs(Mathf.Sin(moveTime * moveSpeed) * moveAmplitude);
         
         transform.position = pos;
+        this.transform.rotation = Quaternion.LookRotation(pos);
         if (t >= 1) Destroy(gameObject); //do whatever losing thing is supposed to happen when they get to the end
+        
     }
 
     internal void Stun(float time)

@@ -80,6 +80,7 @@ public class BuildManager : MonoBehaviour
     }
     private void SwitchBuildMode()
     {
+        if(!InBuildMode && GameManager.InWave) { return; }
         InBuildMode = !InBuildMode;
         BuildUI.SetActive(InBuildMode);
         OutlineObject.SetActive(InBuildMode);
