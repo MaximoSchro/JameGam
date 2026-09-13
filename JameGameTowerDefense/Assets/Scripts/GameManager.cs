@@ -35,7 +35,6 @@ public class GameManager : MonoBehaviour
             currencyTracker.text = $"{currency}";
         }
     }
-    private List<GameObject> enemyList = new List<GameObject>();
     private Coroutine slowTime;
     private void OnEnable()
     {
