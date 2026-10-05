@@ -8,30 +8,19 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public static Action<bool> SetSwingAction;
-    public static Action<int> UpgradeSwingTier;
-    public static Action<float> IncreaseStunTime;
-
+    #region Default Controller Variables
     public InputAction MovementAction;
     public InputAction JumpAction;
-    public InputAction SwingAction;
-    public InputAction InteractAction;
+    public InputAction MouseMovement;
 
-    public bool CanChargeTierTwo;
-    public bool CanChargeTierThree;
+    public float sensX;
+    public float sensY;
 
     [SerializeField] private float speed = 10;
     [SerializeField] private float acceleration = 20;
     [SerializeField] private float jumpPower = 10;
 
-    [SerializeField] private GameObject ShovelObject;
-    [SerializeField] private Animator ShovelAnimator;
-    [SerializeField] private float ChargeTime;
-    [SerializeField] private float ChargeMagnitude;
-    [SerializeField] private float StunTime;
-
-    [SerializeField] private GameObject InteractText;
-    [SerializeField] private GameObject ShopCamera;
+    [SerializeField] private GameObject cameraObject;
 
     private CharacterController controller;
 
@@ -42,7 +31,35 @@ public class PlayerController : MonoBehaviour
     private Vector3 currentVelocity = Vector3.zero;
     private Vector3 desiredFinalVelocity = Vector3.zero;
 
+    private float cameraXRotation;
+    private float cameraYRotation;
+    private float mouseX;
+    private float mouseY;
+
     private bool jumpValue;
+
+    #endregion
+
+    #region New Controller Variables
+    public static Action<bool> SetSwingAction;
+    public static Action<int> UpgradeSwingTier;
+    public static Action<float> IncreaseStunTime;
+
+    public InputAction SwingAction;
+    public InputAction InteractAction;
+
+    public bool CanChargeTierTwo;
+    public bool CanChargeTierThree;
+
+    [SerializeField] private GameObject ShovelObject;
+    [SerializeField] private Animator ShovelAnimator;
+
+    [SerializeField] private GameObject InteractText;
+    [SerializeField] private GameObject ShopCamera;
+
+    [SerializeField] private float ChargeTime;
+    [SerializeField] private float ChargeMagnitude;
+    [SerializeField] private float StunTime;
 
     private int shovelChargeState;
     private bool holdingCharge;
@@ -52,6 +69,7 @@ public class PlayerController : MonoBehaviour
     private GameObject mainCamera;
     private GameObject currentRaycastTarget;
 
+    #endregion
 
     private void OnEnable()
     {
@@ -59,6 +77,7 @@ public class PlayerController : MonoBehaviour
         JumpAction.Enable();
         SwingAction.Enable();
         InteractAction.Enable();
+        MouseMovement.Enable();
 
         SetSwingAction += SetSwing;
         UpgradeSwingTier += SwingUpgrade;
@@ -70,6 +89,7 @@ public class PlayerController : MonoBehaviour
         JumpAction.Disable();
         SwingAction.Disable();
         InteractAction.Disable();
+        MouseMovement.Disable();
 
         SetSwingAction -= SetSwing;
         UpgradeSwingTier -= SwingUpgrade;
@@ -81,6 +101,8 @@ public class PlayerController : MonoBehaviour
         MovementAction.canceled += context => OnMove(context.ReadValue<Vector2>().normalized);
         JumpAction.performed += context => OnJump(context.ReadValue<float>());
         InteractAction.performed += context => HandleInteraction();
+        MouseMovement.performed += context => OnMouseMove(context.ReadValue<Vector2>());
+        MouseMovement.canceled += context => OnMouseMove(context.ReadValue<Vector2>());
 
         SwingAction.performed += context => StartSwing();
         SwingAction.canceled += context => EndSwing();
@@ -95,6 +117,13 @@ public class PlayerController : MonoBehaviour
     {
         if (!ShopCamera.activeInHierarchy)
         {
+            cameraYRotation += mouseX * sensX * Time.deltaTime;
+            cameraXRotation -= mouseY * sensY * Time.deltaTime;
+
+            cameraXRotation = Mathf.Clamp(cameraXRotation, -90f, 90f);
+
+            cameraObject.transform.rotation = Quaternion.Euler(cameraXRotation, cameraYRotation, 0);
+
             if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out RaycastHit hit, 5f, interactableLayer))
             {
                 currentRaycastTarget = hit.transform.gameObject;
@@ -121,6 +150,11 @@ public class PlayerController : MonoBehaviour
     private void OnMove(Vector2 directionNormalized)
     {
         absoluteMovementInput = directionNormalized;
+    }
+    private void OnMouseMove(Vector2 movement)
+    {
+        mouseX = movement.x;
+        mouseY = movement.y;
     }
     private void OnJump(float context)
     {
